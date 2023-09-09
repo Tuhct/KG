@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>.link {  fill: none;  stroke: #666;  stroke-width: 1.5px;}#licensing {  fill: green;}.link.licensing {  stroke: green;}.link.resolved {  stroke-dasharray: 0,2 1;}circle {  fill: #ccc;  stroke: #333;  stroke-width: 1.5px;}text {  font: 12px Microsoft YaHei;  pointer-events: none;  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;}.linetext {    font-size: 12px Microsoft YaHei;}</style>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var links = 
+[
+{source:'陈心怡',target:'孙雨彤','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'贺敬森','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'罗仕松','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'马博洋','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'崔嘉选','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'陈心怡',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'贺敬森','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'罗仕松','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'马博洋','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'崔嘉选','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'孙雨彤',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'晏叶涛',target:'张博洋','rela':'旅游', type: 'resolved'},
+{source:'晏叶涛',target:'朱明方','rela':'旅游', type: 'resolved'},
+{source:'晏叶涛',target:'李子月','rela':'旅游', type: 'resolved'},
+{source:'贺敬森',target:'卢桂东','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'周卓颖','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'罗迈克','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'牛孟迁','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'魏德睿','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'贺敬森',target:'罗仕松','rela':'吃饭', type: 'resolved'},
+{source:'贺敬森',target:'马博洋','rela':'吃饭', type: 'resolved'},
+{source:'贺敬森',target:'崔嘉选','rela':'吃饭', type: 'resolved'},
+{source:'贺敬森',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'贺敬森',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'贺敬森',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'李家鑫',target:'张博洋','rela':'美食', type: 'resolved'},
+{source:'李家鑫',target:'王磊','rela':'美食', type: 'resolved'},
+{source:'李家鑫',target:'焦怡培','rela':'美食', type: 'resolved'},
+{source:'李家鑫',target:'黄成月','rela':'美食', type: 'resolved'},
+{source:'李家鑫',target:'刘郎','rela':'听歌', type: 'resolved'},
+{source:'李家鑫',target:'马麒','rela':'游泳', type: 'resolved'},
+{source:'马麒',target:'谢嘉晶','rela':'排球', type: 'resolved'},
+{source:'苏晨飞',target:'龚逢君','rela':'看小说', type: 'resolved'},
+{source:'苏晨飞',target:'简浪','rela':'看小说', type: 'resolved'},
+{source:'苏晨飞',target:'马婵媛','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'高增慧','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'龚逢君','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'简浪','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'罗仕松','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'苏晨飞',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'谢嘉晶',target:'杨骐铭','rela':'玩游戏', type: 'resolved'},
+{source:'谢嘉晶',target:'沈磊','rela':'玩游戏', type: 'resolved'},
+{source:'马婵媛',target:'高增慧','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'龚逢君','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'简浪','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'罗仕松','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'马婵媛',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'卢桂东',target:'周卓颖','rela':'篮球', type: 'resolved'},
+{source:'卢桂东',target:'罗迈克','rela':'篮球', type: 'resolved'},
+{source:'卢桂东',target:'牛孟迁','rela':'篮球', type: 'resolved'},
+{source:'卢桂东',target:'魏德睿','rela':'篮球', type: 'resolved'},
+{source:'卢桂东',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'高增慧',target:'龚逢君','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'简浪','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'罗仕松','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'高增慧',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'王冰菁',target:'田勇','rela':'羽毛球', type: 'resolved'},
+{source:'龚逢君',target:'简浪','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'罗仕松','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'龚逢君',target:'简浪','rela':'看小说', type: 'resolved'},
+{source:'杨骐铭',target:'沈磊','rela':'玩游戏', type: 'resolved'},
+{source:'杨骐铭',target:'吴双全','rela':'乒乓球', type: 'resolved'},
+{source:'杨骐铭',target:'牛孟迁','rela':'乒乓球', type: 'resolved'},
+{source:'杨骐铭',target:'刘雍斌','rela':'乒乓球', type: 'resolved'},
+{source:'陈塬淏',target:'简浪','rela':'书法', type: 'resolved'},
+{source:'简浪',target:'罗仕松','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'简浪',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'马博洋','rela':'吃饭', type: 'resolved'},
+{source:'罗仕松',target:'崔嘉选','rela':'吃饭', type: 'resolved'},
+{source:'罗仕松',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'罗仕松',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'罗仕松',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'罗仕松',target:'吴双全','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'罗仕松',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'张健',target:'张博洋','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'石杰','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'崔嘉选','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'李焯彬','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'陈槿逸','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'张健',target:'马博洋','rela':'睡觉', type: 'resolved'},
+{source:'张健',target:'李焯彬','rela':'睡觉', type: 'resolved'},
+{source:'张健',target:'谢瑜','rela':'睡觉', type: 'resolved'},
+{source:'张健',target:'陈槿逸','rela':'睡觉', type: 'resolved'},
+{source:'张健',target:'葛昱彤','rela':'睡觉', type: 'resolved'},
+{source:'张健',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'马博洋',target:'崔嘉选','rela':'吃饭', type: 'resolved'},
+{source:'马博洋',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'马博洋',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'马博洋',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'马博洋',target:'李焯彬','rela':'睡觉', type: 'resolved'},
+{source:'马博洋',target:'谢瑜','rela':'睡觉', type: 'resolved'},
+{source:'马博洋',target:'陈槿逸','rela':'睡觉', type: 'resolved'},
+{source:'马博洋',target:'葛昱彤','rela':'睡觉', type: 'resolved'},
+{source:'马博洋',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'张博洋',target:'朱明方','rela':'旅游', type: 'resolved'},
+{source:'张博洋',target:'李子月','rela':'旅游', type: 'resolved'},
+{source:'张博洋',target:'王磊','rela':'美食', type: 'resolved'},
+{source:'张博洋',target:'焦怡培','rela':'美食', type: 'resolved'},
+{source:'张博洋',target:'黄成月','rela':'美食', type: 'resolved'},
+{source:'张博洋',target:'石杰','rela':'游戏', type: 'resolved'},
+{source:'张博洋',target:'崔嘉选','rela':'游戏', type: 'resolved'},
+{source:'张博洋',target:'李焯彬','rela':'游戏', type: 'resolved'},
+{source:'张博洋',target:'陈槿逸','rela':'游戏', type: 'resolved'},
+{source:'张博洋',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'张博洋',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'吴双全',target:'冯军胜','rela':'听音乐', type: 'resolved'},
+{source:'吴双全',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'吴双全',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'吴双全',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'吴双全',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'吴双全',target:'牛孟迁','rela':'乒乓球', type: 'resolved'},
+{source:'吴双全',target:'刘雍斌','rela':'乒乓球', type: 'resolved'},
+{source:'周卓颖',target:'罗迈克','rela':'篮球', type: 'resolved'},
+{source:'周卓颖',target:'牛孟迁','rela':'篮球', type: 'resolved'},
+{source:'周卓颖',target:'魏德睿','rela':'篮球', type: 'resolved'},
+{source:'周卓颖',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'石杰',target:'焦怡培','rela':'旅行', type: 'resolved'},
+{source:'石杰',target:'崔嘉选','rela':'游戏', type: 'resolved'},
+{source:'石杰',target:'李焯彬','rela':'游戏', type: 'resolved'},
+{source:'石杰',target:'陈槿逸','rela':'游戏', type: 'resolved'},
+{source:'石杰',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'石杰',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'杨光',target:'王妍','rela':'追剧', type: 'resolved'},
+{source:'杨光',target:'凌好','rela':'小说', type: 'resolved'},
+{source:'杨光',target:'吴量','rela':'小说', type: 'resolved'},
+{source:'杨光',target:'田芯怡','rela':'小说', type: 'resolved'},
+{source:'杨光',target:'宋特儿','rela':'小说', type: 'resolved'},
+{source:'杨光',target:'黄烜','rela':'小说', type: 'resolved'},
+{source:'凌好',target:'黄成月','rela':'漫画', type: 'resolved'},
+{source:'凌好',target:'吴量','rela':'小说', type: 'resolved'},
+{source:'凌好',target:'田芯怡','rela':'小说', type: 'resolved'},
+{source:'凌好',target:'宋特儿','rela':'小说', type: 'resolved'},
+{source:'凌好',target:'黄烜','rela':'小说', type: 'resolved'},
+{source:'罗迈克',target:'牛孟迁','rela':'篮球', type: 'resolved'},
+{source:'罗迈克',target:'魏德睿','rela':'篮球', type: 'resolved'},
+{source:'罗迈克',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'牛孟迁',target:'刘雍斌','rela':'乒乓球', type: 'resolved'},
+{source:'牛孟迁',target:'魏德睿','rela':'篮球', type: 'resolved'},
+{source:'牛孟迁',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'崔嘉选',target:'李焯彬','rela':'游戏', type: 'resolved'},
+{source:'崔嘉选',target:'陈槿逸','rela':'游戏', type: 'resolved'},
+{source:'崔嘉选',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'崔嘉选',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'崔嘉选',target:'谢瑜','rela':'吃饭', type: 'resolved'},
+{source:'崔嘉选',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'崔嘉选',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'李焯彬',target:'王磊','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'田芯怡','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'宋特儿','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'刘梦媛','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'焦怡培','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'李焯彬',target:'陈槿逸','rela':'游戏', type: 'resolved'},
+{source:'李焯彬',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'李焯彬',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'李焯彬',target:'谢瑜','rela':'睡觉', type: 'resolved'},
+{source:'李焯彬',target:'陈槿逸','rela':'睡觉', type: 'resolved'},
+{source:'李焯彬',target:'葛昱彤','rela':'睡觉', type: 'resolved'},
+{source:'李焯彬',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'刘郎',target:'李子月','rela':'看电影', type: 'resolved'},
+{source:'田勇',target:'鲍晨曦','rela':'跑步', type: 'resolved'},
+{source:'吴量',target:'田芯怡','rela':'小说', type: 'resolved'},
+{source:'吴量',target:'宋特儿','rela':'小说', type: 'resolved'},
+{source:'吴量',target:'黄烜','rela':'小说', type: 'resolved'},
+{source:'谢瑜',target:'陈槿逸','rela':'睡觉', type: 'resolved'},
+{source:'谢瑜',target:'葛昱彤','rela':'睡觉', type: 'resolved'},
+{source:'谢瑜',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'谢瑜',target:'王程灏','rela':'吃饭', type: 'resolved'},
+{source:'谢瑜',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'王磊',target:'焦怡培','rela':'美食', type: 'resolved'},
+{source:'王磊',target:'黄成月','rela':'美食', type: 'resolved'},
+{source:'王磊',target:'田芯怡','rela':'音乐', type: 'resolved'},
+{source:'王磊',target:'宋特儿','rela':'音乐', type: 'resolved'},
+{source:'王磊',target:'刘梦媛','rela':'音乐', type: 'resolved'},
+{source:'王磊',target:'焦怡培','rela':'音乐', type: 'resolved'},
+{source:'王磊',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'陆国强',target:'宋特儿','rela':'电影', type: 'resolved'},
+{source:'陆国强',target:'焦怡培','rela':'电影', type: 'resolved'},
+{source:'陈槿逸',target:'艾孜麦提·艾尔肯','rela':'游戏', type: 'resolved'},
+{source:'陈槿逸',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'陈槿逸',target:'葛昱彤','rela':'睡觉', type: 'resolved'},
+{source:'陈槿逸',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'冯军胜',target:'艾孜麦提·艾尔肯','rela':'听音乐', type: 'resolved'},
+{source:'冯军胜',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'冯军胜',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'冯军胜',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'朱明方',target:'李子月','rela':'旅游', type: 'resolved'},
+{source:'王程灏',target:'黄烜','rela':'吃饭', type: 'resolved'},
+{source:'魏德睿',target:'艾孜麦提·艾尔肯','rela':'篮球', type: 'resolved'},
+{source:'艾孜麦提·艾尔肯',target:'张刚','rela':'游戏', type: 'resolved'},
+{source:'艾孜麦提·艾尔肯',target:'王妍','rela':'听音乐', type: 'resolved'},
+{source:'艾孜麦提·艾尔肯',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'艾孜麦提·艾尔肯',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'田芯怡',target:'宋特儿','rela':'小说', type: 'resolved'},
+{source:'田芯怡',target:'黄烜','rela':'小说', type: 'resolved'},
+{source:'田芯怡',target:'宋特儿','rela':'音乐', type: 'resolved'},
+{source:'田芯怡',target:'刘梦媛','rela':'音乐', type: 'resolved'},
+{source:'田芯怡',target:'焦怡培','rela':'音乐', type: 'resolved'},
+{source:'田芯怡',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'王妍',target:'李幸悦','rela':'听音乐', type: 'resolved'},
+{source:'王妍',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'葛昱彤',target:'黄烜','rela':'睡觉', type: 'resolved'},
+{source:'李幸悦',target:'胡家宇','rela':'听音乐', type: 'resolved'},
+{source:'宋特儿',target:'焦怡培','rela':'电影', type: 'resolved'},
+{source:'宋特儿',target:'刘梦媛','rela':'音乐', type: 'resolved'},
+{source:'宋特儿',target:'焦怡培','rela':'音乐', type: 'resolved'},
+{source:'宋特儿',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'宋特儿',target:'黄烜','rela':'小说', type: 'resolved'},
+{source:'刘梦媛',target:'焦怡培','rela':'音乐', type: 'resolved'},
+{source:'刘梦媛',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'焦怡培',target:'黄成月','rela':'音乐', type: 'resolved'},
+{source:'焦怡培',target:'黄成月','rela':'美食', type: 'resolved'},
+];
+
+var nodes = {};
+
+links.forEach(function(link)
+{
+  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+  link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+});
+
+var width = 1920, height = 1080;
+
+var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(links)
+    .size([width, height])
+    .linkDistance(180)
+    .charge(-1500)
+    .on("tick", tick)
+    .start();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var marker=
+    svg.append("marker")
+    .attr("id", "resolved")
+    .attr("markerUnits","userSpaceOnUse")
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX",32)
+    .attr("refY", -1)
+    .attr("markerWidth", 12)
+    .attr("markerHeight", 12)
+    .attr("orient", "auto")
+    .attr("stroke-width",2)
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr('fill','#000000');
+
+var edges_line = svg.selectAll(".edgepath")
+    .data(force.links())
+    .enter()
+    .append("path")
+    .attr({
+          'd': function(d) {return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y},
+          'class':'edgepath',
+          'id':function(d,i) {return 'edgepath'+i;}})
+    .style("stroke",function(d){
+         var lineColor;
+		 lineColor="#B43232";
+         return lineColor;
+     })
+    .style("pointer-events", "none")
+    .style("stroke-width",0.5)
+    .attr("marker-end", "url(#resolved)" );
+
+var edges_text = svg.append("g").selectAll(".edgelabel")
+.data(force.links())
+.enter()
+.append("text")
+.style("pointer-events", "none")
+.attr({  'class':'edgelabel',
+               'id':function(d,i){return 'edgepath'+i;},
+               'dx':80,
+               'dy':0
+               });
+
+edges_text.append('textPath')
+.attr('xlink:href',function(d,i) {return '#edgepath'+i})
+.style("pointer-events", "none")
+.text(function(d){return d.rela;});
+
+var circle = svg.append("g").selectAll("circle")
+    .data(force.nodes())
+    .enter().append("circle")
+    .style("fill",function(node){
+        var color;
+        var link=links[node.index];
+		color="#F9EBF9";
+        return color;
+    })
+    .style('stroke',function(node){ 
+        var color;
+        var link=links[node.index];
+		color="#A254A2";
+        return color;
+    })
+    .attr("r", 28)
+    .on("click",function(node)
+	{
+        edges_line.style("stroke-width",function(line){
+            console.log(line);
+            if(line.source.name==node.name || line.target.name==node.name){
+                return 4;
+            }else{
+                return 0.5;
+            }
+        });
+    })
+    .call(force.drag);
+
+var text = svg.append("g").selectAll("text")
+    .data(force.nodes())
+    .enter()
+    .append("text")
+    .attr("dy", ".35em")  
+    .attr("text-anchor", "middle")
+    .style('fill',function(node){
+        var color;
+        var link=links[node.index];
+		color="#A254A2";
+        return color;
+    }).attr('x',function(d){
+        var re_en = /[a-zA-Z]+/g;
+        if(d.name.match(re_en)){
+             d3.select(this).append('tspan')
+             .attr('x',0)
+             .attr('y',2)
+             .text(function(){return d.name;});
+        }
+        
+        else if(d.name.length<=4){
+             d3.select(this).append('tspan')
+            .attr('x',0)
+            .attr('y',2)
+            .text(function(){return d.name;});
+        }else{
+            var top=d.name.substring(0,4);
+            var bot=d.name.substring(4,d.name.length);
+
+            d3.select(this).text(function(){return '';});
+
+            d3.select(this).append('tspan')
+                .attr('x',0)
+                .attr('y',-7)
+                .text(function(){return top;});
+
+            d3.select(this).append('tspan')
+                .attr('x',0)
+                .attr('y',10)
+                .text(function(){return bot;});
+        }
+    });
+
+function tick() {
+  circle.attr("transform", transform1);
+  text.attr("transform", transform2);
+
+  edges_line.attr('d', function(d) { 
+      var path='M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y;
+      return path;
+  });  
+    
+  edges_text.attr('transform',function(d,i){
+        if (d.target.x<d.source.x){
+            bbox = this.getBBox();
+            rx = bbox.x+bbox.width/2;
+            ry = bbox.y+bbox.height/2;
+            return 'rotate(180 '+rx+' '+ry+')';
+        }
+        else {
+            return 'rotate(0)';
+        }
+   });
+}
+
+function linkArc(d) {
+  return 'M '+d.source.x+' '+d.source.y+' L '+ d.target.x +' '+d.target.y
+}
+
+function transform1(d) {
+  return "translate(" + d.x + "," + d.y + ")";
+}
+function transform2(d) {
+      return "translate(" + (d.x) + "," + d.y + ")";
+}
+
+</script>
+

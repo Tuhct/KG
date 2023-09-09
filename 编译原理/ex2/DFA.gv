@@ -1,0 +1,12 @@
+digraph G {
+	"0 1 12 2 3 4 6" -> "4 5 7" [label=D]
+	"4 5 7" -> "4 5 7" [label=D]
+	"4 5 7" -> "8 9" [label="."]
+	"8 9" -> "0 1 10 3 9" [label=D]
+	"0 1 10 3 9" -> "0 1 10 3 9" [label=D]
+	"0 1 12 2 3 4 6" [color=red shape=circle]
+	"0 1 12 2 3 4 6" [shape=circle]
+	"4 5 7" [shape=circle]
+	"8 9" [shape=circle]
+	"0 1 10 3 9" [shape=circle]
+}
